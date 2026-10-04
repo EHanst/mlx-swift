@@ -292,9 +292,12 @@ let cmlx = Target.target(
         "mlx/mlx/backend/metal/kernels",
         "mlx/mlx/backend/metal/nojit_kernels.cpp",
 
-        // distributed backends: enable ring, disable MPI + NCCL + JACCL
+        // distributed backends: all disabled (MPI, ring, NCCL, JACCL). The ring backend is TCP;
+        // excluding it and its socket helpers keeps BSD socket code out of the binary
+        // (Companion D0 air-gap, gate G22).
         "mlx/mlx/distributed/mpi/mpi.cpp",
-        "mlx/mlx/distributed/ring/no_ring.cpp",
+        "mlx/mlx/distributed/ring/ring.cpp",
+        "mlx/mlx/distributed/utils.cpp",
         "mlx/mlx/distributed/nccl/nccl.cpp",
         "mlx/mlx/distributed/jaccl/jaccl.cpp",
         "mlx/mlx/distributed/jaccl/lib",
